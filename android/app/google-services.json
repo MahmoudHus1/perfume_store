@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "321240689519",
+    "project_id": "dogwood-baton-371407",
+    "storage_bucket": "dogwood-baton-371407.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:321240689519:android:a81e82ddd66029c9ea969a",
+        "android_client_info": {
+          "package_name": "com.example.perfume_store"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "321240689519-67jqsqng151fl8lejcsbrtogi92pfv6n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDo6TvH-kwvhJ8iCO9YRIc2MCoYaCH4JUA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "321240689519-67jqsqng151fl8lejcsbrtogi92pfv6n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
