@@ -9,10 +9,12 @@ import 'custom_text.dart';
 class CustomButton extends StatelessWidget {
   String text;
   Function function;
+  bool isLoading;
   CustomButton({
     Key? key,
     required this.text,
     required this.function,
+    this.isLoading = false,
   }) : super(key: key);
 
   @override
@@ -29,11 +31,15 @@ class CustomButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(50),
               color: AppColors.secondColor),
           child: Center(
-            child: CustomText(
-              text: text,
-              color: AppColors.primaryColor,
-              fontSize: 20,
-            ),
+            child: isLoading
+                ? const CircularProgressIndicator(
+                    color: AppColors.primaryColor,
+                  )
+                : CustomText(
+                    text: text,
+                    color: AppColors.primaryColor,
+                    fontSize: 20,
+                  ),
           ),
         ),
       ),

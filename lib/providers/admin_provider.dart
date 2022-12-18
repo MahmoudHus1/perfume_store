@@ -11,7 +11,7 @@ import '../view/admin/edit_category.dart';
 import '../view/admin/edit_product.dart';
 
 class AdminProvider extends ChangeNotifier {
-  AdminProvider(){
+  AdminProvider() {
     getAllCategories();
   }
 
@@ -37,6 +37,7 @@ class AdminProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
   pickIngredientImage() async {
     XFile? pickedFile =
         await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -141,7 +142,7 @@ class AdminProvider extends ChangeNotifier {
   TextEditingController productPriceController = TextEditingController();
   GlobalKey<FormState> productKey = GlobalKey();
   addNewProduct(String catId) async {
-    if (imageFile != null && ingredientFile!=null) {
+    if (imageFile != null && ingredientFile != null) {
       if (productKey.currentState!.validate()) {
         AppRouter.appRouter.showLoadingDialoug();
         String imageUrl = await StorageHelper.storageHelper
@@ -150,7 +151,7 @@ class AdminProvider extends ChangeNotifier {
             .uploadNewImage("products_images", ingredientFile!);
         Product product = Product(
             imageUrl: imageUrl,
-            ingredientImage:ingredientImage,
+            ingredientImage: ingredientImage,
             name: productNameController.text,
             description: productDescriptionController.text,
             price: productPriceController.text,
@@ -168,7 +169,7 @@ class AdminProvider extends ChangeNotifier {
           productDescriptionController.clear();
           productPriceController.clear();
           imageFile = null;
-          ingredientFile=null;
+          ingredientFile = null;
           notifyListeners();
           AppRouter.appRouter
               .showCustomDialoug('Success', 'Your Product has been added');
@@ -182,20 +183,32 @@ class AdminProvider extends ChangeNotifier {
   }
 
   getMenAndWomenProducts() async {
-    final QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('categories').get();
+    final QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('categories').get();
     for (var doc in querySnapshot.docs) {
-      if(((doc.data() as Map)['name'] as String).contains('Women')){
+      if (((doc.data() as Map)['name'] as String).contains('Women')) {
         womenProducts = [];
-        final QuerySnapshot productData = await FirebaseFirestore.instance.collection('categories/${doc.id}/products').get();
-        for (int i = 0; i < productData.docChanges.length; i++){
-           womenProducts.add(Product.fromMap(productData.docs[i].data() as Map<String, dynamic>));
+        final QuerySnapshot productData = await FirebaseFirestore.instance
+            .collection('categories/${doc.id}/products')
+            .get();
+        for (int i = 0; i < productData.docChanges.length; i++) {
+          Product product = Product.fromMap(
+              productData.docs[i].data() as Map<String, dynamic>);
+
+          product.id = productData.docs[i].id;
+          womenProducts.add(product);
         }
-      }
-      else if(((doc.data() as Map)['name'] as String).contains('Men')) {
+      } else if (((doc.data() as Map)['name'] as String).contains('Men')) {
         menProducts = [];
-         final QuerySnapshot productData = await FirebaseFirestore.instance.collection('categories/${doc.id}/products').get();
-        for (int i = 0; i < productData.docChanges.length; i++){
-           menProducts.add(Product.fromMap(productData.docs[i].data() as Map<String, dynamic>));
+        final QuerySnapshot productData = await FirebaseFirestore.instance
+            .collection('categories/${doc.id}/products')
+            .get();
+        for (int i = 0; i < productData.docChanges.length; i++) {
+          Product product = Product.fromMap(
+              productData.docs[i].data() as Map<String, dynamic>);
+
+          product.id = productData.docs[i].id;
+          menProducts.add(product);
         }
       }
     }
@@ -204,7 +217,6 @@ class AdminProvider extends ChangeNotifier {
   }
 
   getAllProducts(String catId) async {
-   
     allProducts = null;
     notifyListeners();
     allProducts = await FirestoreHelper.firestoreHelper.getAllProducts(catId);
@@ -236,7 +248,7 @@ class AdminProvider extends ChangeNotifier {
     Product newProduct = Product(
         id: product.id,
         imageUrl: product.imageUrl,
-        ingredientImage :product.ingredientImage,
+        ingredientImage: product.ingredientImage,
         name: productNameController.text.isEmpty
             ? product.name
             : productNameController.text,
@@ -255,7 +267,7 @@ class AdminProvider extends ChangeNotifier {
       int index = allProducts!.indexOf(product);
       allProducts![index] = product;
       imageFile = null;
-      ingredientFile=null;
+      ingredientFile = null;
       productNameController.clear();
       productDescriptionController.clear();
       productPriceController.clear();

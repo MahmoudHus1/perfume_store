@@ -7,6 +7,7 @@ import 'package:perfume_store/core/constant/colors.dart';
 import 'package:perfume_store/models/product.dart';
 import 'package:perfume_store/providers/admin_provider.dart';
 import 'package:perfume_store/providers/auth_provider.dart';
+import 'package:perfume_store/providers/cart_provider.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetiles extends StatelessWidget {
@@ -43,13 +44,18 @@ class ProductDetiles extends StatelessWidget {
                               child: SizedBox(
                                   height: 250,
                                   width: 150,
-                                  child:
-                                      Image.network(product.ingredientImage, fit: BoxFit.cover,))),
+                                  child: Image.network(
+                                    product.ingredientImage,
+                                    fit: BoxFit.cover,
+                                  ))),
                           Expanded(
                               child: SizedBox(
                                   height: 250,
                                   width: 150,
-                                  child: Image.network(product.imageUrl, fit: BoxFit.cover,)))
+                                  child: Image.network(
+                                    product.imageUrl,
+                                    fit: BoxFit.cover,
+                                  )))
                         ],
                       ),
                       const SizedBox(
@@ -61,14 +67,16 @@ class ProductDetiles extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: AppColors.secondColor,
                       ),
-                      const SizedBox(height: 20,),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           SizedBox(
-                            width: 365,
-                            child: CustomText(text: product.description)),
+                              width: 365,
+                              child: CustomText(text: product.description)),
                           const SizedBox(
                             width: 5,
                           ),
@@ -78,10 +86,12 @@ class ProductDetiles extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-               Padding(
+                Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
-                    mainAxisAlignment:authProvider.loggedUser!.isAdmin ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: authProvider.loggedUser!.isAdmin
+                        ? MainAxisAlignment.center
+                        : MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
                         children: [
@@ -97,7 +107,22 @@ class ProductDetiles extends StatelessWidget {
                           )
                         ],
                       ),
-                   if(!authProvider.loggedUser!.isAdmin)   CustomButton(text: "Add to cart", function: () {})
+                      if (!authProvider.loggedUser!.isAdmin)
+                        Consumer<CartProvider>(
+                          builder: (context, value, _) {
+                            return CustomButton(
+                              isLoading: value.isLoading,
+                              text: "Add to cart",
+                              function: () async {
+                                value.addToCart(
+                                  product,
+                                  authProvider.loggedUser!.id!,
+                                  product.id!,
+                                );
+                              },
+                            );
+                          },
+                        )
                     ],
                   ),
                 )

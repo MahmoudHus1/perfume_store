@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:perfume_store/custom_map/custom_map.dart';
 import 'package:perfume_store/providers/admin_provider.dart';
 import 'package:perfume_store/providers/auth_provider.dart';
+import 'package:perfume_store/providers/cart_provider.dart';
 import 'package:perfume_store/view/auth/signup_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +30,11 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<AdminProvider>(
             create: (context) {
               return AdminProvider();
+            },
+          ),
+          ChangeNotifierProvider<CartProvider>(
+            create: (context) {
+              return CartProvider();
             },
           ),
         ],
