@@ -32,6 +32,12 @@ class UserInterface extends StatelessWidget {
         backgroundColor: AppColors.secondColor,
       ),
       body: Consumer<AdminProvider>(builder: (context, provider, index) {
+        if(!provider.getData) {
+          provider.getMenAndWomenProducts();
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
         return Container(
           padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
           child: SingleChildScrollView(
@@ -62,7 +68,7 @@ class UserInterface extends StatelessWidget {
                   height: 200,
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
-                    itemCount: provider.allCategories!.length,
+                    itemCount:provider.allCategories!.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -129,7 +135,7 @@ class UserInterface extends StatelessWidget {
                   height: 400,
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
-                    itemCount: provider.allCategories!.length,
+                    itemCount:provider.menProducts.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -145,7 +151,7 @@ class UserInterface extends StatelessWidget {
                                   child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
-                                        provider.allCategories![index].imageUrl,
+                                        provider.menProducts[index].imageUrl,
                                         fit: BoxFit.fill,
                                       ))),
                             ),
@@ -154,7 +160,7 @@ class UserInterface extends StatelessWidget {
                             ),
                             Expanded(
                               child: CustomText(
-                                text: provider.allCategories![index].name,
+                                text: provider.menProducts[index].name,
                                 color: AppColors.secondColor,
                                 fontSize: 16,
                               ),
@@ -196,7 +202,7 @@ class UserInterface extends StatelessWidget {
                   height: 400,
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
-                    itemCount: provider.allCategories!.length,
+                    itemCount: provider.womenProducts.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -212,7 +218,7 @@ class UserInterface extends StatelessWidget {
                                   child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
-                                        provider.allCategories![index].imageUrl,
+                                        provider.womenProducts[index].imageUrl,
                                         fit: BoxFit.fill,
                                       ))),
                             ),
@@ -221,7 +227,7 @@ class UserInterface extends StatelessWidget {
                             ),
                             Expanded(
                               child: CustomText(
-                                text: provider.allCategories![index].name,
+                                text: provider.womenProducts[index].name,
                                 color: AppColors.secondColor,
                                 fontSize: 16,
                               ),

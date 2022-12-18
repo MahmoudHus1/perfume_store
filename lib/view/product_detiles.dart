@@ -5,6 +5,9 @@ import 'package:perfume_store/component/custom_text.dart';
 import 'package:perfume_store/core/constant/colors.dart';
 
 import 'package:perfume_store/models/product.dart';
+import 'package:perfume_store/providers/admin_provider.dart';
+import 'package:perfume_store/providers/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetiles extends StatelessWidget {
   Product product;
@@ -15,6 +18,8 @@ class ProductDetiles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AuthProvider authProvider = Provider.of(context);
+
     return Scaffold(
         appBar: AppBar(
           title: CustomText(
@@ -73,10 +78,10 @@ class ProductDetiles extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                Padding(
+               Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment:authProvider.loggedUser!.isAdmin ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
                         children: [
@@ -92,7 +97,7 @@ class ProductDetiles extends StatelessWidget {
                           )
                         ],
                       ),
-                      CustomButton(text: "Add to cart", function: () {})
+                   if(!authProvider.loggedUser!.isAdmin)   CustomButton(text: "Add to cart", function: () {})
                     ],
                   ),
                 )

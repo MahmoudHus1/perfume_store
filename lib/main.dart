@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           navigatorKey: AppRouter.appRouter.navigatorKey,
           home: Scaffold(
-            body: CustomMap(),
+            body: SignUpScreen(),
           ),
         ));
   }

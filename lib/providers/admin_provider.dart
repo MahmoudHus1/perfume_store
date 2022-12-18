@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../app_router/app_router.dart';
@@ -13,6 +14,10 @@ class AdminProvider extends ChangeNotifier {
   AdminProvider(){
     getAllCategories();
   }
+
+  List<Product> menProducts = [];
+  List<Product> womenProducts = [];
+  bool getData = false;
 
   String? requiredValidation(String? content) {
     if (content == null || content.isEmpty) {
@@ -176,10 +181,34 @@ class AdminProvider extends ChangeNotifier {
     }
   }
 
+  getMenAndWomenProducts() async {
+    final QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('categories').get();
+    for (var doc in querySnapshot.docs) {
+      if(((doc.data() as Map)['name'] as String).contains('Women')){
+        womenProducts = [];
+        final QuerySnapshot productData = await FirebaseFirestore.instance.collection('categories/${doc.id}/products').get();
+        for (int i = 0; i < productData.docChanges.length; i++){
+           womenProducts.add(Product.fromMap(productData.docs[i].data() as Map<String, dynamic>));
+        }
+      }
+      else if(((doc.data() as Map)['name'] as String).contains('Men')) {
+        menProducts = [];
+         final QuerySnapshot productData = await FirebaseFirestore.instance.collection('categories/${doc.id}/products').get();
+        for (int i = 0; i < productData.docChanges.length; i++){
+           menProducts.add(Product.fromMap(productData.docs[i].data() as Map<String, dynamic>));
+        }
+      }
+    }
+    getData = true;
+    notifyListeners();
+  }
+
   getAllProducts(String catId) async {
+   
     allProducts = null;
     notifyListeners();
     allProducts = await FirestoreHelper.firestoreHelper.getAllProducts(catId);
+
     notifyListeners();
   }
 
