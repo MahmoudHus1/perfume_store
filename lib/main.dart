@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:perfume_store/custom_map/custom_map.dart';
 import 'package:perfume_store/providers/admin_provider.dart';
 import 'package:perfume_store/providers/auth_provider.dart';
 import 'package:perfume_store/providers/cart_provider.dart';

@@ -4,9 +4,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:perfume_store/view/admin/admin_main_page.dart';
-import 'package:perfume_store/view/main_page_screen.dart';
-import 'package:perfume_store/view/normal_user/user_main_page.dart';
-import 'package:perfume_store/view/user_interface_screen.dart';
+import 'package:perfume_store/view/normal_user/main_page_screen.dart';
+import 'package:perfume_store/view/profile_screen.dart';
 
 import 'package:string_validator/string_validator.dart';
 
@@ -16,7 +15,6 @@ import '../data_repositories/firestore_helper.dart';
 import '../data_repositories/storage_helper.dart';
 import '../models/app_user.dart';
 import '../view/auth/signin_screen.dart';
-import '../view/admin/profile_page.dart';
 
 class AuthProvider extends ChangeNotifier {
   GlobalKey<FormState> signInKey = GlobalKey();
@@ -114,7 +112,7 @@ class AuthProvider extends ChangeNotifier {
 
     if (userId != null) {
       getUser(userId);
-      AppRouter.appRouter.goToWidgetAndReplace(ProfilePage());
+      AppRouter.appRouter.goToWidgetAndReplace(AccountScreen());
     } else {
       AppRouter.appRouter.goToWidgetAndReplace(SignInScreen());
     }

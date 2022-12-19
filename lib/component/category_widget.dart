@@ -30,7 +30,7 @@ class CategoryWidget extends StatelessWidget {
               children: [
                 SizedBox(
                     width: double.infinity,
-                    height: 500,
+                    height: 300,
                     child: ClipRRect(
                       borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(10),

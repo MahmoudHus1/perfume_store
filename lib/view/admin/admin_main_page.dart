@@ -4,7 +4,7 @@ import 'package:perfume_store/component/custom_text.dart';
 import 'package:perfume_store/core/constant/colors.dart';
 import 'package:perfume_store/view/admin/add_category.dart';
 import 'package:perfume_store/view/admin/display_categories.dart';
-import 'package:perfume_store/view/admin/profile_page.dart';
+import 'package:perfume_store/view/profile_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../component/my_drawer_header.dart';
@@ -37,7 +37,7 @@ class _AdminPageState extends State<AdminPage> {
                 fontWeight: FontWeight.bold)),
         backgroundColor: AppColors.secondColor,
       ),
-      body: ProfilePage(),
+      body: AccountScreen(),
       drawer: Drawer(
         child: SingleChildScrollView(
           child: Column(

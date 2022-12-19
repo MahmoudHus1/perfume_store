@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:perfume_store/app_router/app_router.dart';
 import 'package:perfume_store/component/custom_text.dart';
 import 'package:perfume_store/core/constant/colors.dart';
+import 'package:perfume_store/providers/auth_provider.dart';
 import 'package:perfume_store/view/product_detiles.dart';
 import 'package:provider/provider.dart';
 
@@ -39,6 +40,7 @@ class ProductWidget extends StatelessWidget {
                         fit: BoxFit.fill,
                       ),
                     )),
+                    Provider.of<AuthProvider>(context).loggedUser!.isAdmin ?
                 Positioned(
                     right: 15,
                     top: 10,
@@ -76,7 +78,8 @@ class ProductWidget extends StatelessWidget {
                               )),
                         ),
                       ],
-                    )),
+                    )):
+                    const SizedBox()
               ],
             ),
             ClipRRect(

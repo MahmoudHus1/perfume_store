@@ -12,7 +12,7 @@ class AppUser {
       required this.userName,
       required this.phoneNumber,
       this.id,
-      this.imageUrl,
+      this.imageUrl = "https://firebasestorage.googleapis.com/v0/b/dogwood-baton-371407.appspot.com/o/user_image%2Favatar-370-456322.webp?alt=media&token=3578907b-21e0-4bcb-9e8f-dfe4e982691d",
       this.isAdmin = false
       });
 

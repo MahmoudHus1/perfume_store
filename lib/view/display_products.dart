@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:perfume_store/app_router/app_router.dart';
 import 'package:perfume_store/component/custom_text.dart';
 import 'package:perfume_store/core/constant/colors.dart';
+import 'package:perfume_store/providers/auth_provider.dart';
 import 'package:perfume_store/view/admin/add_product.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +20,7 @@ class AllProducts extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         actions: [
+          Provider.of<AuthProvider>(context).loggedUser!.isAdmin ?
           IconButton(
               onPressed: () {
                 AppRouter.appRouter.goToWidget(AddNewProduct(catId!));
@@ -26,7 +28,8 @@ class AllProducts extends StatelessWidget {
               icon: const Icon(
                 Icons.add,
                 color: AppColors.primaryColor,
-              ))
+              )):
+              const SizedBox()
         ],
         title: const CustomText(
           text: 'All products',

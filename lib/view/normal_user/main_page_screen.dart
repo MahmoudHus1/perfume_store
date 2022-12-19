@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:perfume_store/core/constant/colors.dart';
-import 'package:perfume_store/view/cart_screen.dart';
+import 'package:perfume_store/view/normal_user/cart_screen.dart';
 import 'package:perfume_store/view/profile_screen.dart';
-import 'package:perfume_store/view/user_interface_screen.dart';
+import 'package:perfume_store/view/normal_user/user_interface_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -17,7 +17,7 @@ class _MainScreenState extends State<MainScreen> {
   static final List<Widget> _navScreens = <Widget>[
     const UserInterface(),
     const CartScreen(),
-    const AccountScreen(),
+     const AccountScreen(),
   ];
   @override
   Widget build(BuildContext context) {

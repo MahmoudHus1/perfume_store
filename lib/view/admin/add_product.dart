@@ -15,7 +15,7 @@ class AddNewProduct extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: InkWell(
                     onTap: () {
-                      Provider.of<AdminProvider>(context).addNewProduct(catId);
+                      Provider.of<AdminProvider>(context, listen: false).addNewProduct(catId);
                     },
                     child: Container(
                       width: double.infinity,

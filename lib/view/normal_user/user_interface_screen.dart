@@ -4,9 +4,8 @@ import 'package:perfume_store/component/custom_text.dart';
 import 'package:perfume_store/core/constant/colors.dart';
 import 'package:perfume_store/providers/admin_provider.dart';
 import 'package:perfume_store/providers/auth_provider.dart';
-import 'package:perfume_store/view/cart_screen.dart';
+import 'package:perfume_store/view/display_products.dart';
 import 'package:perfume_store/view/product_detiles.dart';
-import 'package:perfume_store/view/profile_screen.dart';
 import 'package:provider/provider.dart';
 
 class UserInterface extends StatelessWidget {
@@ -34,6 +33,8 @@ class UserInterface extends StatelessWidget {
       ),
       body: Consumer<AdminProvider>(builder: (context, provider, index) {
         if (!provider.getData) {
+          provider.menProducts =[];
+          provider.womenProducts =[];
           provider.getMenAndWomenProducts();
           return const Center(
             child: CircularProgressIndicator(),
@@ -73,33 +74,41 @@ class UserInterface extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Expanded(
-                              flex: 8,
-                              child: Container(
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: ClipRRect(
+                        child: GestureDetector(
+                          onTap: () {
+                            provider.getAllProducts(provider.allCategories![index].id!);
+                            AppRouter.appRouter.goToWidget(AllProducts(
+                                catId: provider.allCategories![index].id));
+                          },
+                          child: Column(
+                            children: [
+                              Expanded(
+                                flex: 8,
+                                child: Container(
+                                    width: 150,
+                                    decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
-                                      child: Image.network(
-                                        provider.allCategories![index].imageUrl,
-                                        fit: BoxFit.fill,
-                                      ))),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Expanded(
-                              child: CustomText(
-                                text: provider.allCategories![index].name,
-                                color: AppColors.secondColor,
-                                fontSize: 16,
+                                    ),
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.network(
+                                          provider
+                                              .allCategories![index].imageUrl,
+                                          fit: BoxFit.fill,
+                                        ))),
                               ),
-                            )
-                          ],
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Expanded(
+                                child: CustomText(
+                                  text: provider.allCategories![index].name,
+                                  color: AppColors.secondColor,
+                                  fontSize: 16,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       );
                     },
@@ -133,7 +142,7 @@ class UserInterface extends StatelessWidget {
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 30),
-                  height: 400,
+                  height: 300,
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     itemCount: provider.menProducts.length,
@@ -142,11 +151,9 @@ class UserInterface extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => ProductDetiles(
-                                  product: provider.menProducts[index],
-                                ),
+                            AppRouter.appRouter.goToWidget(
+                              ProductDetiles(
+                                product: provider.menProducts[index],
                               ),
                             );
                           },
@@ -211,7 +218,7 @@ class UserInterface extends StatelessWidget {
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 30),
-                  height: 400,
+                  height: 300,
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     itemCount: provider.womenProducts.length,
